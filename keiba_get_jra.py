@@ -170,16 +170,16 @@ url_3 = '?d=1'
 horses = race_soup.find_all("a", href=re.compile("/directory/horse"))
 data_list = []
 for horse in horses:
-    #hoid = re.search('/directory/horse/', str(horses[0]))
     url_2 = str(horse)[9:37]
 
     time.sleep(1)
     target_url = start_url + url_2 + url_3
 
-    driver = webdriver.Chrome('C:\selenium\chromedriver')
-    driver.get(target_url)
+    #driver = webdriver.Chrome('C:\selenium\chromedriver')
+    #driver.get(target_url)
+    #html = driver.page_source
 
-    html = driver.page_source
+    html = urllib.request.urlopen(target_url)
     soup = BeautifulSoup(html, "lxml")
 
     # 馬の名前を取得
