@@ -37,7 +37,7 @@ elif race_course_num == "09":
 elif race_course_num == "10":
     race_course = "小倉"
 
-out = codecs.open("./this_race_info.csv", "w", "utf-8")
+out = codecs.open("./this_race_info.csv", "w", "sjis")
 out.write("競馬場,レース番号,レース名,コース,周回,距離,馬場状態,枠番,馬番,馬名,性別,馬齢,毛色,調教師,馬体重,増減,斤量,騎手,人気,オッズ,調教コメント,調教評価\n")
 
 race_html = urllib.request.urlopen(
@@ -153,10 +153,6 @@ for i in range(1, len(train_mark_list) + 1):
     j += 1
 
 for i in range(0, len(horse_info)):
-    print(race_course + "," + race_no + "," + race_name + "," + track + "," + cond + "," + str(
-        horse_gate_list[i]) + "," + str(horse_no_list[i]) + "," + str(horse_info[i]) + "," + str(weight[i]) + "," + str(
-        weight_change[i]) + "," + str(weight_tax[i]) + "," + str(jockey[i]) + "," + str(popularity_list[i]) + "," + str(
-        odds_list[i]) + "," + str(train_comment_list[i]) + "," + str(train_mark_list[i]))
     out.write(race_course + "," + race_no + "," + race_name + "," + track + "," + cond + "," + str(
         horse_gate_list[i]) + "," + str(horse_no_list[i]) + "," + str(horse_info[i]) + "," + str(weight[i]) + "," + str(
         weight_change[i]) + "," + str(weight_tax[i]) + "," + str(jockey[i]) + "," + str(popularity_list[i]) + "," + str(
@@ -174,10 +170,6 @@ for horse in horses:
 
     time.sleep(1)
     target_url = start_url + url_2 + url_3
-
-    #driver = webdriver.Chrome('C:\selenium\chromedriver')
-    #driver.get(target_url)
-    #html = driver.page_source
 
     html = urllib.request.urlopen(target_url)
     soup = BeautifulSoup(html, "lxml")
@@ -206,12 +198,11 @@ for horse in horses:
                     data.append(d)
                 # 1行のすべての情報をdataにappendしたらdata_listにappend
                 data_list.append(data)
-                with open('C:\\temp\\test.csv', 'a') as f:
-                    writer = csv.writer(f)
-                    writer.writerow(data)
-
     except:
         continue
 
 for d in data_list:
     print (d)
+with open('./horse.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerows(data_list)
